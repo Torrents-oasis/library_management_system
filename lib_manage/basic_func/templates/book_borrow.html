@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+
+{% block title %}书籍借阅{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-10">
+
+            <div class="container">
+                <h2> 书籍借阅 </h2>
+            </div>
+
+            <div class="panel-body">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+
+                        <div class="col-4">
+                            <div class="form-group alert alert-info">
+
+                                <p>所选书籍： {{ borrow_object.name }}</p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    id: {{ borrow_object.id }}</p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    库存: {{ borrow_object.inventory }}</p>
+
+                                <p>当前管理员: {{info_dict.name}} </p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    id: {{info_dict.id}} </p>
+
+                            </div>
+                            <div class="alert alert-success">
+                                <p>{{success_info}}</p>
+                            </div>
+                            <div class="alert alert-danger">
+                                <p>{{error_info}}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-8">
+                            <form method="post" novalidate>
+                                {% csrf_token %}
+
+                                {% for field in form %}
+                                <div class="form-group">
+                                    <label>{{ field.label }}</label>
+                                    {{ field }}
+                                    <span style="color: red;">{{ field.errors.0 }}</span>
+                                </div>
+                                {% endfor %}
+                                <div class="col-8">
+                                    <select name="make_appoint" class="form-select"
+                                            aria-label="Default select example">
+                                        <option value="False" selected>若无库存，是否预约一本(否)</option>
+<!--                                        <option value="false">否</option>-->
+                                        <option value="True">是</option>
+                                    </select>
+                                </div>
+                                <br>
+
+                                <button type="submit" class="btn btn-primary">提交</button>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,224 @@
+{% extends 'layout.html' %}
+
+{% block title %}书籍管理{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h1>图书管理</h1>
+
+        <div class="col-12">
+            <div class="container">
+                <div class="row justify-content-center">
+
+                    <div class="col-2">
+                        <a class="btn btn-success" href="/book/add/">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                            添加图书
+                        </a>
+                    </div>
+
+                    <div class="col-2">
+                        <a class="btn btn-success" href="/book/book_delete_all/">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                            清空图书馆
+                        </a>
+                    </div>
+
+                    <div class="col-2">
+                        <a class="btn btn-success" href="/book/book_random_create/">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                            随机上架5本图书
+                        </a>
+                    </div>
+
+                    <div class="col-2">
+                        <a class="btn btn-success" href="/book/book_create_from_excel/">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                            从excel批量导入图书
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <form class="form-check" method="get">
+                <div class="input-group" style="width: 100%;">
+                    <div class="container">
+                        <div class="row justify-content-center">
+
+                            <div class="col-2">
+                                <select name="order_sequence" class="form-select"
+                                        aria-label="Default select example">
+                                    <option value="name" selected>排序依据(书名)</option>
+                                    <option value="name">书名</option>
+                                    <option value="id">id</option>
+                                    <option value="category">类别</option>
+                                    <option value="press">出版社</option>
+                                    <option value="author">作者</option>
+                                    <option value="year">出版年份</option>
+                                    <option value="price">价格</option>
+                                    <option value="total">总藏书量</option>
+                                    <option value="inventory">当前库存</option>
+                                </select>
+                            </div>
+
+                            <div class="col-2">
+                                <select name="sequence_direct" class="form-select"
+                                        aria-label="Default select example">
+                                    <option value="" selected>排序顺序(正序)</option>
+                                    <option value="">正序</option>
+                                    <option value="-">倒序</option>
+                                </select>
+                            </div>
+
+                            <div class="col-2">
+                                <select name="what_to_query" class="form-select"
+                                        aria-label="Default select example">
+                                    <option value="name" selected>查询关键字(书名)</option>
+                                    <option value="name">书名</option>
+                                    <option value="category">类别</option>
+                                    <option value="press">出版社</option>
+                                    <option value="author">作者</option>
+                                </select>
+                            </div>
+
+                            <div class="col-4">
+                                <input type="text" name="query" class="form-control"
+                                       placeholder="Search for..."
+                                       value="{{ search_data }}">
+                            </div>
+
+                            <div class="col-2">
+                                <input type="submit" value="查询">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-12">
+            <form class="form-check" method="get">
+                <div class="input-group" style="width: 100%;">
+                    <div class="container">
+                        <div class="row justify-content-center">
+
+                            <div class="col-2">
+                                <select name="order_sequence" class="form-select"
+                                        aria-label="Default select example">
+                                    <option value="name" selected>排序依据(书名)</option>
+                                    <option value="name">书名</option>
+                                    <option value="id">id</option>
+                                    <option value="category">类别</option>
+                                    <option value="press">出版社</option>
+                                    <option value="author">作者</option>
+                                    <option value="year">出版年份</option>
+                                    <option value="price">价格</option>
+                                    <option value="total">总藏书量</option>
+                                    <option value="inventory">当前库存</option>
+                                </select>
+                            </div>
+
+                            <div class="col-2">
+                                <select name="sequence_direct" class="form-select"
+                                        aria-label="Default select example">
+                                    <option value="" selected>排序顺序(正序)</option>
+                                    <option value="">正序</option>
+                                    <option value="-">倒序</option>
+                                </select>
+                            </div>
+
+                            <div class="col-2">
+                                <select name="what_to_query" class="form-select"
+                                        aria-label="Default select example">
+                                    <option value="price" selected>查询关键字(价格)</option>
+                                    <option value="price">价格</option>
+                                    <option value="year">出版年份</option>
+                                </select>
+                            </div>
+
+                            <div class="col-2">
+                                <input type="text" name="query_2_1" class="form-control"
+                                       placeholder="Search for..."
+                                       value="{{ search_data_2_1 }}">
+                            </div>
+
+                            <div class="col-2">
+                                <input type="text" name="query_2_2" class="form-control"
+                                       placeholder="Search for..."
+                                       value="{{ search_data_2_2 }}">
+                            </div>
+
+                            <div class="col-2">
+                                <input type="submit" value="查询">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!--  表格 -->
+        <div class="col-12">
+            <div class="container">
+                <div class="table-responsive">
+                    <table class="table align-middle text-center">
+                        <thead>
+                        <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">类别</th>
+                            <th scope="col">书名</th>
+                            <th scope="col">出版社</th>
+                            <th scope="col">出版年份</th>
+                            <th scope="col">作者</th>
+                            <th scope="col">价格</th>
+                            <th scope="col">总藏书量</th>
+                            <th scope="col">当前库存</th>
+                            <th scope="col">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for obj in queryset %}
+                        <tr>
+                            <th scope="row">{{obj.id}}</th>
+                            <td>{{obj.get_category_display}}</td>
+                            <td>{{obj.name}}</td>
+                            <td>{{obj.press}}</td>
+                            <td>{{obj.year}}</td>
+                            <td>{{obj.author}}</td>
+                            <td>{{obj.price}}</td>
+                            <td>{{obj.total}}</td>
+                            <td>{{obj.inventory}}</td>
+                            <td>
+                                <a class="btn btn-primary btn-xs"
+                                   href="/book/{{obj.id}}/edit">编辑</a>
+                                <a class="btn btn-danger btn-xs"
+                                   href="/book/{{obj.id}}/delete">删除</a>
+                                <a class="btn btn-success btn-xs"
+                                   href="/book/{{obj.id}}/borrow">借阅</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-10">
+            <ul class="pagination">
+                {{ page_string }}
+            </ul>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block js %}{% endblock %}
+

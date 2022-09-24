@@ -1,0 +1,96 @@
+{% extends 'layout.html' %}
+
+{% block title %}借书记录{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12">
+
+            <h1>借书记录</h1>
+
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <form method="get">
+                            <div class="input-group">
+                                <input type="text" name="query" class="form-control" placeholder="Search for..."
+                                       value="{{ search_data }}">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="table-responsive">
+                    <table class="table align-middle text-center">
+                        <thead>
+                        <tr>
+                            <th scope="col">书号</th>
+
+                            <th scope="col">类别</th>
+                            <th scope="col">书名</th>
+                            <th scope="col">出版社</th>
+                            <th scope="col">年份</th>
+                            <th scope="col">作者</th>
+                            <th scope="col">价格</th>
+                            <th scope="col">数量</th>
+
+                            <th scope="col">card_id</th>
+                            <th scope="col">admin_id</th>
+                            <th scope="col">结束日期</th>
+                            <th scope="col">应还日期</th>
+                            <th scope="col">是否归还</th>
+                            <th scope="col">是否被预约</th>
+                            <th scope="col">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for obj in queryset %}
+                        <tr>
+                            <th scope="row">{{obj.book_id}}</th>
+
+                            <td>{{obj.book_id.get_category_display}}</td>
+                            <td>{{obj.book_id.name}}</td>
+                            <td>{{obj.book_id.press}}</td>
+                            <td>{{obj.book_id.year}}</td>
+                            <td>{{obj.book_id.author}}</td>
+                            <td>{{obj.book_id.price}}</td>
+                            <td>{{obj.book_id.inventory}}</td>
+
+                            <td>{{obj.card_id}}</td>
+                            <td>{{obj.admin_id}}</td>
+                            <td>{{obj.lend_date|date:'Y-m-d'}}</td>
+                            <td>{{obj.return_date|date:'Y-m-d'}}</td>
+                            <td>{{obj.returned}}</td>
+                            <td>{{obj.appointed}}</td>
+                            <td>
+                                <a class="btn btn-primary btn-xs"
+                                   href="/card/{{obj.id}}/record_expand/?query={{obj.card_id}}">续借</a>
+<!--                                <a class="btn btn-success btn-xs"-->
+<!--                                   href="/card/{{obj.id}}/record_return/?query={{obj.card_id}}">还书</a>-->
+                                <a class="btn btn-success btn-xs"
+                                   href="/book/{{obj.card_id}}/return/">还书</a>
+                                <a class="btn btn-danger btn-xs"
+                                   href="/card/{{obj.id}}/record_delete/?query={{obj.card_id}}">删除记录</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-10">
+            <ul class="pagination">
+                {{ page_string }}
+            </ul>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block js %}{% endblock %}
+

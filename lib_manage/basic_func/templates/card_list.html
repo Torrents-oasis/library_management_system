@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+
+{% block title %}借书证管理{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-10">
+
+            <h1>借书证管理</h1>
+
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-3">
+                        <a class="btn btn-success" href="/card/add/">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                            添加借书证
+                        </a>
+                    </div>
+
+                    <div class="col-3">
+                        <a class="btn btn-success" href="/card/record_query/?query=0">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                            查询借书记录
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="container">
+                <div class="table-responsive">
+                    <table class="table align-middle text-center">
+                        <thead>
+                        <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">姓名</th>
+                            <th scope="col">机构</th>
+                            <th scope="col">职位</th>
+                            <th scope="col">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for obj in queryset %}
+                        <tr>
+                            <th scope="row">{{obj.id}}</th>
+                            <td>{{obj.name}}</td>
+                            <td>{{obj.institution}}</td>
+                            <td>{{obj.get_position_display}}</td>
+                            <td>
+                                <a class="btn btn-primary btn-xs" href="/card/{{obj.id}}/edit/">编辑</a>
+                                <a class="btn btn-danger btn-xs" href="/card/{{obj.id}}/delete/">删除</a>
+<!--                                <a class="btn btn-success btn-xs" href="/card/{{obj.id}}/record_query/">查询借书记录</a>-->
+                                <a class="btn btn-success btn-xs" href="/card/record_query/?query={{obj.id}}">查询借书记录</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-10">
+            <ul class="pagination">
+                {{ page_string }}
+            </ul>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block js %}{% endblock %}
+

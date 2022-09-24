@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block title %}编辑书目{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-10">
+
+            <div class="container">
+                <h2> 编辑书目 </h2>
+            </div>
+
+            <div class="panel-body">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                    <div class="form-group">
+                        <label>{{ field.label }}</label>
+                        {{ field }}
+                        <span style="color: red;">{{ field.errors.0 }}</span>
+                    </div>
+                    {% endfor %}
+
+                    <button type="submit" class="btn btn-primary">提交</button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
